@@ -6,13 +6,11 @@
 \usepackage[english]{babel}
 \usepackage{pgfpages} % required for notes on second screen
 \usepackage{graphicx}
-\usepackage{subfigure}
+
 \usepackage{multicol}
-\usepackage[normalem]{ulem}
 
 \usepackage{tabularx,ragged2e}
 \usepackage{booktabs}
-\usepackage{marvosym}
 
 %--------------------------------------------------------------------------
 % Load theme
@@ -22,945 +20,580 @@
 \usepackage{tikz}
 \usetikzlibrary{patterns,shapes,fpu,fit,calc,mindmap,backgrounds,positioning,svg.path}
 
-\tikzset{
-  invisible/.style={opacity=0},
-  visible on/.style={alt={#1{}{invisible}}},
-  alt/.code args={<#1>#2#3}{%
-    \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
-  },
-}
-
-%% Neat trick to have only one navigation bullet per subsection
-%% http://tex.stackexchange.com/questions/64333/one-navigation-bullet-per-subsection-with-subsection-false-in-custom-beamer-them
-%\usepackage{etoolbox}
-%\makeatletter
-%\patchcmd{\slideentry}{\advance\beamer@xpos by1\relax}{}{}{}
-%\def\beamer@subsectionentry#1#2#3#4#5{\advance\beamer@xpos by1\relax}%
-%\makeatother
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \graphicspath{{figs/}}
 
-% for model of anthopomorphism
-\newcommand{\IPA}{{$\mathcal{A}_0$~}}
-\newcommand{\SLA}{{$\mathcal{A}_\infty$~}}
-\newcommand{\sla}{{\mathcal{A}_\infty}}
-\newcommand{\AntMax}{{$\mathcal{A}_{max}$~}}
-\newcommand{\antMax}{{\mathcal{A}_{max}}}
-
-% for HATP plans
-\newcommand{\hatpaction}[3]{#1\\\textsf{\scriptsize #2,}\\\textsf{\scriptsize #3}}
-\newcommand{\stmt}[1]{{\footnotesize \tt  #1}}
-
-% for mutual modelling
-\newcommand{\Mmodel}[3]{{\mathcal{M}(#1, #2, #3)}}
-\newcommand{\model}[3]{{$\mathcal{M}(#1, #2, #3)$}}
-\newcommand{\Model}[3]{{$\mathcal{M}^{\circ}(#1, #2, #3)$}}
-
-% typeset logical concept
-\newcommand{\concept}[1]{{\scriptsize \texttt{#1}}}
-
-\newcommand{\backbutton}{\hfill\hyperlink{appendix}{\beamerreturnbutton{Supplementary material}}}
 %--------------------------------------------------------------------------
 % General presentation settings
 %--------------------------------------------------------------------------
-\title{data-driven social dynamics}
-\subtitle{two approaches towards socially-aware joint actions}
-\date{{\bf  towards a framework for joint action}@RSS18 -- 29 Jun. 2018}
+\title{Social Robots are Fake News}
+\subtitle{...so let's make them great again}
+\date{\today}
 \author{Séverin Lemaignan}
-\institute{{\bf Bristol Robotics Lab} University of the West of England}
+\institute{{\bf Bristol Robotics Lab}\\University of the West of England}
 
 %--------------------------------------------------------------------------
 % Notes settings
 %--------------------------------------------------------------------------
 %\setbeameroption{show notes on second screen}
-%\setbeameroption{hide notes}
 
 \begin{document}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\maketitle
-
-\section{SPARC}
-
-\imageframe[color=black]{sparc/overview}
-\imageframe[color=black]{sparc/gui}
-\imageframe[color=black]{sparc/woz-gui}
-
-%\begin{frame}<1>[plain,label=whatsnext]{}
-%
-%    \begin{center}
-%
-%    \Large
-%    \bf How to push back the boundaries of social robotics?
-%
-%    \end{center}
-%\end{frame}
-%
-%
-%\imageframe[caption={open, underspecified situations\par complex~social~dynamics\par rich~semantics\par interplay~of~socio-cognitive~functions}]{pr2-baby-3}
-%
-%\note{
-%    \begin{itemize}
-%        \item open, underspecified situations
-%        \item complex social dynamics
-%        \item rich semantics
-%        \item interplay of several socio-cognitive functions
-%    \end{itemize}
-%}
-%
-%{
-%\paper{Baxter, Lemaignan, Trafton {\bf Workshop on Cognitive Architectures for Social HRI} -- HRI 2016}
-%\begin{frame}<5>{Surface functions for Social Cognition}
-%\centering
-%        \resizebox{!}{0.7\paperheight}{%
-%            \begin{tikzpicture}[
-%                    >=latex,
-%                every edge/.style={<-, draw, very thick}]
-%        
-%
-%            \path[small mindmap, 
-%                level 1 concept/.append style={sibling angle=360/6}, 
-%                level 2 concept/.append style={sibling angle=60}, 
-%            concept color=white,text=hriWarmGreyDark]
-%            node[concept, visible on=<1-5>] {\bf Social\\Cognition in HRI}
-%            [clockwise from=30]
-%            child[concept color=hriSec1,text=white] { node[concept] (percept) {Perception of Human's State}
-%                [clockwise from=120]
-%                child[concept color=hriSec3Dark,text=white] { node[concept]
-%                (emotions) {Empathy Emotions} }
-%                child[concept color=hriSec2Dark,text=white] { node[concept] (attention) {Attention} }
-%                child[concept color=hriSec2CompDark,text=white] { node[concept] (mmodel) {Inference of mental models} };
-%            }
-%            child[concept color=hriSec2Comp,text=white,grow=-45, visible on=<2->] { node[concept] (knowledge) {Social Knowledge} 
-%                [counterclockwise from=-140]
-%                child[concept color=hriSec1CompDark,text=white] { node[concept] (soc-rules) {Social rules} }
-%                child[concept color=hriSec3Comp,text=black] { node[concept] (soc-ctxt) {Social context} }
-%                child[concept color=hriSec2Dark,text=white] { node[concept] (memory) {Social memory} }
-%                child[concept color=hriSec3CompDark,text=white] { node[concept] (common-sense) {Common-sense} };
-%            }
-%            child[concept color=hriSec3Comp,text=black, grow=-120,visible on=<3->] { node[concept] (comm) {Communication} 
-%                [counterclockwise from=180]
-%                child[concept color=hriSec1CompDark,text=white] { node[concept] (dialog) {Verbal} }
-%                child[concept color=hriSec1Dark,text=white] { node[concept] (non-verbal) {Non-verbal} };
-%            }
-%            child[concept color=hriSec3,text=white,grow=180,visible on=<4->] { node[concept] (dynamics) {Interaction Dynamics} 
-%                [clockwise from=180]
-%                child[concept color=hriSec2Dark,text=white] { node[concept] (long-term) {Long-term interaction} };
-%            }
-%            child[concept color=hriSec2,text=black, grow=120,visible on=<5->] { node[concept] (action) {Performing with humans} 
-%                [counterclockwise from=80]
-%                child[concept color=hriSec2CompDark,text=white] { node[concept] {Action, behaviour recognition} }
-%                child[concept color=hriSec1Dark,text=white] { node[concept] {Intention reading} }
-%                child[concept color=hriSec3,text=white] { node[concept] (joint-action) {Joint actions} };
-%            };
-%
-%
-%        \end{tikzpicture}
-%    }
-%\end{frame}
-%}
-%
-%\imageframe[caption={yet...}]{pr2-baby-3}
-%
-%\begin{frame}{What methodology for social HRI?}
-%
-%    \begin{itemize}
-%        \item typical socio-cognitive tasks \textbf{too simple and
-%            constrainted}
-%            \note{
-%            Do not reflect the complexity \& dynamics of real-world interactions
-%            }
-%        \item yet, research \emph{in the wild} is \textbf{difficult to conduct
-%            rigorously and to replicate}
-%    \end{itemize}
-%
-%    \pause
-%
-%    \textbf{Finding the right task is difficult}
-%
-%    \begin{itemize}
-%        \item natural interactions $\Leftarrow$ meaningful task
-%        \item realistic with today's technologies
-%        \item practical, reproducible and measurable
-%        \item focus on social cognition
-%    \end{itemize}
-%\end{frame}
-%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\section[Free play]{The Free play paradigm}
-
-
-\begin{frame}{Free play}
-
-    \begin{center}
-    {\Large ``Just play! Enjoy yourselves!''}
-    \end{center}
-
-    \vspace{3em}
-
-    \begin{itemize}
-        \item \textbf{rich set of cognitive and
-            social dynamics}; importance of motivation/drive; \textbf{uncertain
-            and unexpected situations}
-        \item what is the right action policy? Focus instead on the \textbf{social policy}
-    \end{itemize}
-
-
-\end{frame}
-
-%\videoframe[0.56]{figs/freeplay/maud-zoe-pilot-edit.mkv?autostart&noaudio}
-%
-%{
-%    \paper{Parten, {\bf Social participation among preschool children} Journal
-%    of Abnormal and Social Psychology 1932}
-%\begin{frame}[label=parten]{Stages of play}
-%
-%    In developmental psychology, Parten's {\bf stages of play}:
-%
-%    \begin{enumerate}
-%        \item \includegraphics[height=1cm]{figs/stagesofplay/solitary} {\bf Solitary (independent) play}
-%        \item \includegraphics[height=1cm]{figs/stagesofplay/onlooker} {\bf Onlooker play}
-%        \item \includegraphics[height=1cm]{figs/stagesofplay/parallel}{\bf Parallel play}
-%        \item \includegraphics[height=1cm]{figs/stagesofplay/associative}{\bf Associative play}
-%        \item \includegraphics[height=1cm]{figs/stagesofplay/cooperative}{\bf Cooperative play}
-%    \end{enumerate}
-%
-%    \note{
-%    \begin{enumerate}
-%        \item {\bf Solitary (independent) play}: Playing separately from
-%            others, with no reference to what others are doing.
-%        \item {\bf Onlooker play}: Watching others play. May engage in
-%            conversation but not engaged in doing. True focus on the children at
-%            play.
-%        \item {\bf Parallel play} (adjacent play, social coaction): Playing
-%            with similar objects, clearly beside others but not with them (near
-%            but not with others.)
-%        \item {\bf Associative play}:  Playing with others without
-%            organization of play activity. Initiating or responding to
-%            interaction with peers. 
-%        \item {\bf Cooperative play}: Coordinating one’s behavior with that
-%            of a peer. Everyone has a role, with the emergence of a sense of
-%            belonging to a group. Beginning of "team work."
-%    \end{enumerate}
-%    }
-%
-%
-%\end{frame}
-%}
-%
-%\videoframe[0.56]{figs/freeplay/maud-zoe-pilot-edit.mkv?autostart&noaudio&start=28}
-%
-%\begin{frame}[plain]
-%    \begin{center}
-%    \Large\bf
-%        Can we make it work for HRI?
-%    \end{center}
-%\end{frame}
-
-\imageframe[color=black, scale=0.9]{freeplay/sandbox}
-
-\imageframe{freeplay/freeplay-overview2}
-
-%\imageframe[color=black]{freeplay/freeplay-sandbox-screenshot}
-%\imageframe[color=black]{freeplay/analysis}
-
-
-\begin{frame}{'Sandboxed free play' experimental paradigm}
-
-    \begin{itemize}
-        \item \textbf{Structured methodology} (sandtray) yet \textbf{loosely structured
-            task} (free play)
-        \item<2-> physical playground $\rightarrow$ {\bf replaced by large
-            touchscreen}: escape perception and manipulation in
-            dense \& cluttered scene (but \emph{only} that)
-        \item<3-> importantly, \textbf{perception and interaction with the
-            partner is unimpaired}
-    \end{itemize}
-\end{frame}
-
-
-\imageframe[scale=0.9]{freeplay/setup_top}
-
-\begin{frame}{Freeplay sandox in a nutshell}
-
-    A task that exhibits...
-
-    \begin{itemize}
-        \item open, underspecified situations
-            \item complex social dynamics
-            \item natural interactions
-            \item rich semantics
-            \item interplay of many socio-cognitive functions
-    \end{itemize}
-
-    \pause
-
-    while being...
-    \begin{itemize}
-        \item reproducible/replicable experimental procedure
-        \item clear quantitative metrics
-        \item practical
-    \end{itemize}
-\end{frame}
-
-
-\begin{frame}{Social dynamics to be observed}
-
-    \begin{itemize}
-        \item<+-> the \textbf{task engagement}
-            \begin{itemize}
-                \item are the participants 'on task' or not?
-            \end{itemize}
-        \item<+-> the \textbf{interaction flow} \& \textbf{situation awareness}
-            \begin{itemize}
-                \item what is happening \emph{now}? what is the next expected
-                    action?
-            \end{itemize}
-        \item<+-> the \textbf{social attitude}
-            \begin{itemize}
-                \item pro-social, hostile, assertive (‘bossy’), passive...
-            \end{itemize}
-        \item<+-> the \textbf{social dynamics}
-            \begin{itemize}
-                \item entrainment (coupling), mimicry, implicit turn-taking, joint
-                    attention
-            \end{itemize}
-    \end{itemize}
-
-    \pause
-    $\rightarrow$ {\bf paradigm for socio-cognitive investigation}
-\end{frame}
-
-
-%\section{Sandtray paradigm: more applications}
-%
-%\begin{frame}{Spatial reasoning and Perspective taking}
-%    $\rightarrow$ on-going PhD work by Christopher Wallbridge
-%    \begin{center}
-%        \includegraphics<1>[width=0.9\linewidth]{spatial-relations/RefMap}
-%        \includegraphics<2>[width=0.7\linewidth]{spatial-relations/placementcc}
-%
-%        \only<2>{(take home message: ambiguity is good for you!)}
-%    \end{center}
-%\end{frame}
-%
-%
-%\begin{frame}{Supervised autonomy}
-%    $\rightarrow$ on-going PhD work by Emmanuel Senft
-%    \begin{center}
-%        \includegraphics[width=0.9\linewidth]{sparc/sparc-setup}
-%    \end{center}
-%\end{frame}
-%
-%\section{The PInSoRo dataset}
-
-%\imageframe{freeplay/freeplay-overview2}
-
-\begin{frame}{The PInSoRo dataset}
-    \begin{itemize}
-        \item 120 children, 4 to 8 years old
-        \item 75 interactions
-            \begin{itemize}
-                \item 90 children playing with another child, 
-                \item 30 playing with a robot
-            \end{itemize}
-        \item About 45h+ of recordings; 2M+ frames; $\approx$ 2TB
-         \item average duration of freeplay interactions: 24min in child-child
-         condition; 19min in child-robot condition
-    \end{itemize}
-
-\end{frame}
-
-\videoframe[0.56]{figs/mosaic_blend_long.mp4?autostart}
-
-\begin{frame}{Two baselines}
-
-    \begin{center}
-        \includegraphics<1>[width=\linewidth]{pinsoro-baselines}
-        \includegraphics<2>[width=\linewidth]{pinsoro-baselines2}
-    \end{center}
-\end{frame}
-
-%\imageframe[color=black]{freeplay/3d-point-cloud-facial-features}
-
-\begin{frame}{What did we record?}
-
-\small
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{Domain} & \textbf{Type}                              & \textbf{Details}                          \\ \midrule
-child $\times$ 2        & audio                                      & 16kHz, mono, semi-directional             \\
-                & face (RGB)                                 & qHD (960x540), 30Hz                       \\
-                & face (depth)                               & VGA (640x480), 30Hz                       \\
-                & facial features                            & 70 2D points, 30Hz                        \\
-                & skeleton                                   & 15 2D points, 30Hz                        \\
-                & hands                                      & 20 x 2 2D points, 30Hz                    \\ \midrule
-environment     & RGB                                        & qHD (960x540), 29.7Hz                     \\ \midrule
-touchscreen     & background drawing (RGB)                   & 4Hz                                       \\
-                & touches                                    & 6 points multi-touch, 10Hz                \\
-                & items position and orientation             & (x,y,theta), 10Hz                         \\ \midrule
-annotations     & \multicolumn{2}{l}{timestamped annotations of social behaviours} \\\midrule
-other           & \multicolumn{2}{l}{static transforms between touchscreen and facial cameras}           \\
-                & \multicolumn{2}{l}{cameras calibration informations}                                   \\ \bottomrule
-\end{tabular}
-
-\end{frame}
-
-\videoframe[0.56]{figs/bestof.mp4?autostart}
-
-%\begin{frame}{Dataset}
-%    \begin{itemize}
-%        \item 120 children, 4 to 8 years old; 45h+ of recordings;
-%     \item facial features extracted in ~98\% of frames
-%    \end{itemize}
-%
-%    \begin{center}
-%        \includegraphics[width=0.5\linewidth]{freeplay/durations}
-%    \end{center}
-%\end{frame}
-
-\imageframe[color=black]{freeplay/rviz-faces}
-\videoframe[0.56]{figs/optical_flow.mp4?autostart}
-
-\imageframe[scale=0.95,caption=13000+ annotations]{freeplay/coding-scheme}
-
-\note{
-Coding scheme for social attitude derives from the Social Communication Coding System (SCCS) 
-}
-
-\imageframe[scale=0.95, color=black]{freeplay/annotator}
-%
-%\begin{frame}{Social annotations}
-%    So far,
-%    \begin{itemize}
-%        \item 85\% of the dataset annotated
-%        \item 11500+ annotations
-%        \item average duration of coded episodes: 46 seconds
-%        \item 15\% double-coded
-%    \end{itemize}
-%\end{frame}
-%
-
-%\videoframe[0.56]{figs/raw_annotations.mkv?autostart}
+%--------------------------------------------------------------------------
+% Titlepage
+%--------------------------------------------------------------------------
 
 \begin{frame}[plain]
     \Large
     \begin{center}
-        Anonymised version (5.7GB) available on-line. Grab it now!
-
-        \LARGE \href{https://freeplay-sandbox.github.io}{\bf freeplay-sandbox.github.io}
-
-        \vspace{3cm}
-            \large Open data! Hosted on EU's  \includegraphics[width=0.3\linewidth]{zenodo}
+        Last week, Manuel told you about social robots...
     \end{center}
 \end{frame}
 
-\section{Very early results}
+\maketitle
 
-\imageframe[caption=Simple RNN network]{pinsoronet/pinsoro-net-v2}
-\imageframe[caption=Trained on 10 epochs x 2M datapoints]{pinsoronet/pinsoronet-v2-accuracy-social-attitude-task-engagement}
+%\licenseframe{https://github.com/severin-lemaignan/practical-social-robots}
 
+\section{Social robots? DISHONEST!}
+\imageframe[color=black]{cowriter/henry}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\section[For HRI?]{What does this dataset mean to HRI?}
-%
-%\imageframe[caption=Mutual gaze? Joint attention?]{freeplay/setup-child-child}
-%
-%\begin{frame}{Training for gaze estimation}
-%
-%    \Large End-to-end training to map 2D facial features to gaze location
-%
-%    \begin{center}
-%        \includegraphics[width=0.9\linewidth]{nn-gaze-estimation}
-%    \end{center}
-%
-%    \begin{itemize}
-%        \item \textbf{Input}: 32 2D points (eyes, eyebrows, nose, ears,
-%            shoulders)
-%        \item \textbf{Output}: 2D gaze location on the interactive table
-%    \end{itemize}
-%\end{frame}
-%
-%\imageframe[color=black]{visual_tracking}
-%
-%\begin{frame}{Training for gaze estimation}
-%
-%    \Large End-to-end training to map 2D facial features to gaze location
-%
-%    \begin{center}
-%        \includegraphics[width=0.9\linewidth]{nn-gaze-estimation}
-%    \end{center}
-%
-%    \begin{itemize}
-%        \item \textbf{Pros}: no calibration; no eye tracking device; 2D images
-%        \item \textbf{Cons}: require a initial ground truth; accurate?
-%    \end{itemize}
-%\end{frame}
-%
-%\imageframe[color=black]{visual_tracking_size}
-%\videoframe[0.56]{figs/gaze_tracking_distribution.mkv}
-%\videoframe[0.40]{figs/gaze_tracking.ogv?autostart}
-%
-%
-%\begin{frame}[plain]
-%    \begin{center}
-%    \Large\bf
-%        What about social HRI?
-%    \end{center}
-%\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\section[DNNs]{Deep learning and robotics}
-%
-%{
-%    \paper{Mnih et al. {\bf Human-level control through deep reinforcement learning} -- Nature 2015}
-%\begin{frame}{Learning Complex Behaviours}
-%
-%    \begin{center}
-%        \includegraphics[width=\linewidth]{breakout}
-%    \end{center}
-%
-%
-%        \begin{itemize}
-%            \item Inputs: raw screen image + score
-%            \item from the outside, looks like planning
-%            \item<2-> \sout{1.000.000} {\bf 500} games to play a good human-level
-%        \end{itemize}
-%
-%\end{frame}
-%}
-%
-%\videoframe[0.56]{figs/ogata-deeplearning-towel-folding.mp4?autostart&noaudio&start=19}
-%
-%{
-%    \paper{Yang et al. {\bf Repeatable Folding Task by Humanoid Robot Worker using
-%    Deep Learning} -- Robotics and Automation Letters 2017}
-%\begin{frame}{Learning sequences}
-%
-%    Ogata's demonstration (published this year in IEEE RAL):
-%
-%    \begin{itemize}
-%        \item 2 arms, 12 DoF
-%        \item Inputs: on-board 112$\times$112px camera, joint state
-%        \item<2-> training from 40 teleoperated demonstrations of $\approx$70s
-%
-%    \end{itemize}
-%
-%    \onslide<3>{
-%
-%    Not only learning poses, but \textbf{sequences as well}.
-%    
-%    \emph{Time-Delay Neural Network} (TDNN) to learn to
-%    predict the next step (no RNNs!).
-%}
-%\end{frame}
-%}
+\videoframe[0.56]{figs/cowriter/training-s.mp4}
+%\videoframe[0.56]{figs/cowriter/training-s.mp4?autostart&noaudio}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section[DNNs for Social Robotics]{Deep learning of social interactions?}
-
-\videoframe[0.56]{figs/annotations.mp4?autostart&start=10}
-
-
-\begin{frame}{Aim}
-
-    {\bf Real-time identification} by the robot of...
-
-    \begin{itemize}
-        \item<+-> the \textbf{task engagement}
-            \begin{itemize}
-                \item is my partner 'on task' or not?
-            \end{itemize}
-        \item<+-> the \textbf{interaction flow} \& \textbf{situation awareness}
-            \begin{itemize}
-                \item what is happening right now? should I do something?
-            \end{itemize}
-        \item<+-> the \textbf{social attitude}
-            \begin{itemize}
-                \item Pro-social, hostile, assertive (‘bossy’), passive...
-            \end{itemize}
-        \item<+-> the \textbf{social dynamics}
-            \begin{itemize}
-                \item entrainment (coupling), mimicry, turn-taking, joint
-                    attention
-            \end{itemize}
-    \end{itemize}
-
-    \pause
-
-    Social behaviours; Social dynamics: \textbf{generation as well!}
-\end{frame}
-
-%{
-%    \fullbackground[color=black]{annotations-skel}
-%\begin{frame}[plain]
-%
-%    \vspace{7cm}
-%
-%\setbeamercolor{hriSec1Demo}{fg=white!70!black}
-%\begin{beamercolorbox}[wd=\linewidth,ht=6ex,dp=0.7ex]{hriSec1Demo}
-%
-%    The problem is framed, data is available, next step: {\bf mining it!}
-%\end{beamercolorbox}
-%\end{frame}
-%}
-%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%\section[Conclusion]{Back to the bigger picture}
-%
-%\begin{frame}{One question}
-%
-%    \Large
-%    \centering
-%
-%    {\bf Can sociality emerge from interaction?}
-%
-%    \pause
-%    \normalsize
-%    \vspace{2em}
-%
-%    Both ``emerge'' as \emph{arise from} and ``emerge`` as in \emph{emergent paradigm of
-%    cognition}
-%
-%    \pause
-%
-%    ``Social cognition arising in interaction''? $\rightarrow$ a situated \&
-%    embodied view on cognition
-%
-%\end{frame}
-%
-%\begin{frame}{Deep learning of social interactions}
-%
-%    \large
-%
-%    \begin{center}
-%
-%    Working hypothesis: \textbf{Sociality emerges from interaction}
-%
-%
-%    \pause
-%
-%    $\Rightarrow$ {\bf learning how to interact might lead to an emergent
-%    socio-cognitive behaviour}
-%   
-%    \pause
-%
-%    $\Rightarrow$ {\bf (Deep) learning of socio-cognitive human-robot interactions}
-%
-%
-%
-%    \normalsize
-%
-%        (Supervised (or unsupervised!) recurrent neural networks to model others'
-%            minds $\rightarrow$ a connectionist theory of mind!)
-%
-%
-%    \pause
-%    \vspace{2em}
-%    {\bf ...towards a principled model of social cognition?}
-%
-%    \end{center}
-%
-%\end{frame}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%{
-%    \paper{cited in Lewandowsky and Farrell, {\bf Computational Modeling In
-%    Cognition}, 2011}
-%\begin{frame}{A model?}
-%
-%    Models attempt to \emph{explain}: 
-%    \begin{quote}
-%        ``identifying the causes for an event or phenomenon of interest''
-%    \end{quote}
-%    \begin{quote}
-%        ``unifying disparate phenomena''
-%    \end{quote}
-%
-%\end{frame}
-%}
-%
-%
-%\imageframe[color=white]{islands1}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\imageframe[color=white]{islands2}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\imageframe[color=white]{islands3}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\imageframe[color=white]{islands4}
-%
-%{
-%    \paper{cited in Lewandowsky and Farrell, {\bf Computational Modeling In
-%    Cognition}, 2011}
-%\begin{frame}{A model?}
-%
-%    Models attempt to \emph{explain}: 
-%    \begin{quote}
-%        ``identifying the causes for an event or phenomenon of interest''
-%    \end{quote}
-%    \begin{quote}
-%        ``unifying disparate phenomena''
-%    \end{quote}
-%
-%        A model's value is gained from
-%    \begin{quote}
-%        ``predicting facts that, absent the theory, would be antecedently
-%        improbable''
-%    \end{quote}
-%
-%
-%\end{frame}
-%}
-%
-
-%\begin{frame}{Towards developmental socio-robotics?}
-%
-%    \Large
-%    {\bf Emergence of \hyperlink{parten}{Parten's stages of
-%            play}?}
-%
-%            \small
-%
-%    \begin{enumerate}
-%        \item \includegraphics[height=0.7cm]{figs/stagesofplay/solitary} {Solitary (independent) play}
-%        \item \includegraphics[height=0.7cm]{figs/stagesofplay/onlooker} {Onlooker play}
-%        \item \includegraphics[height=0.7cm]{figs/stagesofplay/parallel}{Parallel play}
-%        \item \includegraphics[height=0.7cm]{figs/stagesofplay/associative}{Associative play}
-%        \item \includegraphics[height=0.7cm]{figs/stagesofplay/cooperative}{Cooperative play}
-%    \end{enumerate}
-%
-%\end{frame}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\section{Sketching a model}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\begin{frame}{A model of artificial social cognition}
-%
-%    I postulate {\bf two stages}:
-%
-%    \begin{enumerate}
-%        \item building models of others' minds
-%        \item exploiting these models to socially act:
-%            \begin{itemize}
-%                \item prediction, reading others' intentions
-%                \item adapting own behaviour, alignment
-%                \item establish join goals
-%                \item ultimately, performing joint actions
-%            \end{itemize}
-%    \end{enumerate}
-%
-%    \vspace{2em}
-%    $\rightarrow$ Social analogs of \emph{perception} \& \emph{action}
-%
-%\end{frame}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%{
-%    \paper{see discussion in Vernon, {\bf Artificial Cognitive Systems: A Primer} 2014}
-%\begin{frame}{Cognitivist vs Emergent paradigms}
-%
-%    ``building'', ``exploiting'', ``reading'', ``establishing''... my terminolgy
-%    denotes a cognitivist approach (`I, the designer of the system, explicitly implement
-%    these capabilities')
-%
-%    \pause
-%    
-%    Possible `emergent paradigm' rephrasing:
-%
-%    \begin{enumerate}
-%        \item developing internal states \emph{connoting} others' minds
-%        \item perturbing (influencing) actions synthesis with these states
-%    \end{enumerate}
-%
-%    \pause
-%
-%    {\bf Hybrid approaches} are possible -- mapping to ``raw phenomenal experience'' vs
-%    ``access counciousness''.
-%\end{frame}
-%}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%{
-%    \paper{Graziano {\bf Consciousness and the Social Brain} -- 2013}
-%\begin{frame}[label=attentionschemata]{Modeling others' mind?}
-%    \large
-%    In cognitive neurosciences: Graziano's \emph{Attention Schemata Theory}
-%
-%    \begin{columns}
-%
-%        \begin{column}{0.5\linewidth}
-%
-%            \begin{center}
-%                \includegraphics<1>[width=1.3\columnwidth]{playing_together}
-%                \includegraphics<2>[width=1.3\columnwidth]{playing_together_gaze}
-%                \includegraphics<3>[width=1.3\columnwidth]{playing_together_awareness}
-%                \includegraphics<4>[width=1.3\columnwidth]{playing_together_mutual_awareness}
-%            \end{center}
-%
-%        \end{column}
-%
-%        \begin{column}{0.5\linewidth}
-%
-%            \only<2>{
-%                \vspace*{1.5cm}
-%                Attention is more about {\bf representation} than visual perspective
-%
-%                \vspace{0.7cm}
-%                ``Awareness is a construct that represents the attentional state
-%                of a brain''
-%
-%            }
-%            \only<3>{
-%                \vspace*{1.5cm}
-%                Graziano's postulate that modelling other's state of awareness
-%                is {\bf mediated by one's own attentional system}, through joint
-%                attention
-%            }
-%            \only<4>{
-%                \vspace*{1.5cm}
-%                    It follows that {\bf joint attention is the process that gives
-%                    rise to social awareness}
-%            }
-%
-%        \end{column}
-%
-%    \end{columns}
-%
-%\end{frame}
-%}
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\begin{frame}{Sketching a path forward: mentalizing}
-%
-%    {\bf Hypothesis 1}: Graziano is right: mental representations are snapshots of
-%    \emph{awareness}, \emph{awareness} being itself a label for the
-%    \emph{memory-mediated process of attention}.
-%
-%    \pause
-%
-%    {\bf Hypothesis 2}: this can be extended to social cognition. \textbf{Modeling one
-%    other mental representations equates to taking snapshots of their current
-%    state of awareness}.
-%
-%    As we do not have direct access to others' process of attention, it has to
-%    be mediated. Following Graziano, we hypotesise that \textbf{modelling other's
-%    state of awareness is mediated by one's own attentional system, through
-%    joint attention mechanisms}.
-%
-%
-%\end{frame}
-%
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-{
-    \fullbackground[color=black]{annotations-skel}
-\begin{frame}[plain]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}{The Robot as a Social Agent}
 
     \begin{columns}
         \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=0.8\linewidth]{cowriter/diego-correct}
+            \end{center}
         \end{column}
         \begin{column}{0.5\linewidth}
-
-    \vspace{7cm}
-\setbeamercolor{hriSec1Demo}{fg=white!70!black}
-\begin{beamercolorbox}[wd=\linewidth,ht=6ex,dp=0.7ex]{hriSec1Demo}
-    \textbf{Thank you!}
-
-    \vspace{2em}
-    \href{https://freeplay-sandbox.github.io}{freeplay-sandbox.github.io}
-\end{beamercolorbox}
+            \begin{itemize}
+                \item<+-> The robot as a \textbf{cognitive agent} is key here
+                    \begin{itemize}
+                        \item Protégé effect
+                        \item metacognition
+                    \end{itemize}
+                \item<+-> A \textbf{social agent} for the child vs a
+                    \textbf{tool} for the teacher!
+            \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
-}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{I'd say very very easy if you have guts}
+
+\imageframe{pr2-baby-1}
+\imageframe{pr2-baby-2}
+\imageframe{pr2-baby-3}
+\imageframe{pr2-baby-4}
+
+\section{I don't understand! Very unfair!}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Some more stuff}
-\begin{frame}{Some building blocks exists}
 
-    \begin{itemize}
-        \item \textbf{Multi-modal fusion}
+\begin{frame}[plain]
 
-            \begin{itemize}
-                \item \eg Noda et al. {\bf Multimodal integration learning of robot behavior
-    using DNN}, Robotics and Autonomous Systems 2014
-            \end{itemize}
+    \centering
 
-        \item \textbf{Behavioural sequences recognition}
-            \begin{itemize}
-                \item How et al. {\bf Behavior recognition for humanoid
-                    robots using long short-term memory},
-                    IJARS 2016 \emph{$\rightarrow$ LSTM to recognise Nao
-                    behaviours}
-                \item Shiarlis et al. {\bf Acquiring Social Interaction
-                    Behaviours for Telepresence Robots via Deep Learning from
-                    Demonstration}, IROS 2017
-            \end{itemize}
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.5\linewidth}
+            How can the robot make sense of and act upon a command like:
+            \vspace{2em}
 
-    \pause
-    {\bf DBSoC: Deep Behavioural Social Cloning} -- LfD + CNNs + LSTM
+            \bf
+            ``Can you give me that book?''
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{center}
+                \includegraphics[width=\linewidth]{pr2-baby-3}
+            \end{center}
+        \end{column}
+    \end{columns}
 
-    Two tasks for a telepresence robot:
-    \begin{enumerate}
-        \item position itself in a (dynamic) group of persons
-        \item follow 2 persons
-    \end{enumerate}
 \end{frame}
 
-{
-    \paper{taken from a NIPS2015 tutorial by Geoff Hinton, Yoshua Bengio \&
-    Yann LeCun}
+\begin{frame}<3>{Multi-modal Symbolic situation assessment}
 
-\begin{frame}{Deep networks $\equiv$ black boxes?}
+    \begin{columns}
+        \begin{column}{0.4\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{human-perspective-small}
+             
+        \end{column}
+        \begin{column}{0.6\linewidth}
+        
+        \begin{figure}
+
+        \resizebox{\columnwidth}{!}{%
+        \begin{tikzpicture}[
+            yscale=1.3,
+            >=latex,
+            every edge/.style={<-, draw, very thick},
+            every node/.style={draw, font=\sf, node distance=0.5, rounded corners,
+            align=center, inner sep=5pt,fill=hriSec2Dark!50},
+            classof/.style={<-, draw=black!60, dashed},
+            property/.style={<-, draw=hriSec2Comp},
+            propname/.style={above, draw=none, fill=none, font=\tt, inner sep=2pt},
+            instance/.style={draw=hriSec1Dark, font=\sf, node distance=0.5, rounded corners,
+        align=center, inner sep=5pt, fill=none}]
+
+            \node[fill=hriSec2Comp!50] (thing) {\textbf{thing}};
+            \node [fill=hriSec3CompDark!50, node distance=1.8, below left=of
+            thing](sthing) {place} edge[dashed] (thing);
+            \node [fill=hriSec3CompDark!50, below left=of sthing] (agent) {agent} edge (sthing);
+                \node [fill=hriSec3CompDark!50, below=of sthing] (artifact) {artifact} edge (sthing);
+                \node [fill=hriSec3CompDark!50, below right=of sthing] (location) {physical
+                support} edge (sthing);
+                \node [fill=hriSec3CompDark!50, below right=of artifact] (table) {table}
+                    edge (location) edge (artifact);
+
+
+            \node [node distance=1, below right=of thing] (tthing) {temporal thing} edge (thing);
+                \node [below right=of tthing] (evt) {event} edge[dashed] (tthing);
+                            \node [below right=of evt] (act) {action} edge (evt);
+
+        \uncover<2->{
+        \draw[dotted, thick] (-8,-3.8) -- +(16, 0);
+
+        \node [instance, below=3 of agent] (human) {human\_1} edge[classof, bend left] (agent);
+        \node [instance, above left=of human] (human2) {human\_2} edge[classof, bend left] (agent);
+        \node [instance, above right=of human, anchor=south] (robot) {myself} edge[classof, bend left] (agent);
+        \node [instance, right=of human, anchor=north west] (book) {book\_game\_thrones}
+        edge[classof] (artifact);
+        \node [instance, right=2 of robot] (ikea) {ikea\_table} edge[classof, bend
+        right] (table);
+        \node [instance, right=2 of book] (brown) {brown} edge[property] node[propname] {hasColor} (book);
+
+
+        }
+        \uncover<3>{
+        \draw[dotted, thick] (-8,-6.2) -- +(16, 0);
+
+        \node [instance, below=5 of act] (moving) {move\_act\_42} edge[classof] (act);
+        \path (moving.west) edge [property, out=180, in=-80, looseness=1] node[propname,below] {currentlyPerforms} (human.230);
+        \path (human.280) edge [property, out=-80, in=-90, looseness=3.5] node[propname,right] {looksAt} (robot.south);
+        \path (ikea.south) edge [property, out=-90, in=-80, looseness=2.5] node[propname, auto] {isOn} (book.320);
+        }
+        \end{tikzpicture}
+        }
+
+        \end{figure}
+
+       \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}{Dialogue Grounding}
+    \centering
+
+    \begin{columns}
+        \begin{column}{0.65\linewidth}
+
+    \centering
+    \vspace*{2em}
+    {\bf ``Give me the book on the table''}\\
+
+    \uncover<2-> {
+        $\downarrow$\\
+        {\tt me} $\rightarrow$ {\tt human\_1} \\
+        find({\tt\scriptsize ?obj type table}) $\rightarrow$ {\tt ikea\_table} \\
+        find({\tt\scriptsize ?obj type book, ?obj isOn ikea\_table})
+        $\rightarrow$ {\tt book\_game\_thrones} \\
+    }
+
+    \uncover<3-> {
+        $\downarrow$\\
+        { \tt
+            \textbf{human\_1} desires \textbf{give\_act\_1}, \\
+            \textbf{give\_act\_1} type \textbf{Give}, \\
+            \textbf{give\_act\_1} performedBy \textbf{myself}, \\
+            \textbf{give\_act\_1} actsOnObject \textbf{book}, \\
+            \textbf{give\_act\_1} receivedBy \textbf{human\_1} \\
+        }
+    }
+            
+        \end{column}
+        \begin{column}{0.35\linewidth}
+         \resizebox{\linewidth}{!}{%
+ 
+ 
+             \begin{tikzpicture}[
+                     >=latex,
+                 every edge/.style={draw, very thick},
+                 skill/.style={draw, rounded corners, align=center, inner sep=5pt, fill=black!20},
+                 label/.style={midway, align=center, font=\scriptsize, above},
+                 subpart/.style={rounded corners, draw, align=center, font=\scriptsize, fill opacity=0.5, text opacity=1, fill=white!50}]
+ 
+             %%% PARSING
+ 
+             \node at (0,0)[skill, fill=hriSec3CompDark!50] (prepro) {Pre-processing};
+                 \node [left=0.7 of prepro] (input) {\textbf{Input}};
+                 \path (input) edge [->] (prepro);
+ 
+                 %\path (spark.100) edge [->, bend right] node[label] {symbolic \\ facts} (oro);
+                 \node [below =0.4 of prepro, skill, fill=hriSec3CompDark!50] (parsing) {Parsing};
+                 \path (prepro) edge [->] (parsing);
+ 
+                 \coordinate (base-onto) at (4,0);
+ 
+                 %%% RESOLUTION
+                     \node [below=0.4 of parsing, skill, fill=hriSec3!50, minimum height=4cm, minimum width=5cm] (resolution) {};
+                 \node [subpart, below=0.2 of resolution.115] (pron) {Pronouns \& \\ anaphora resolution};
+                 \node [subpart, below=0.2 of pron] (noun) {Noun phrase \\ resolution};
+                 \node [subpart, right=0.3 of noun, anchor=north west] (discr) {Discrimination};
+                 \node [subpart, below=0.2 of noun] (verb) {Verbal phrase \\ resolution};
+                 \node [subpart, cylinder, shape border rotate=90, aspect=0.5, below=0.2 of discr] (actions) {Actions};
+                 \path (pron) edge [->] (noun);
+                 \path (noun) edge [->] (discr);
+                 \path (noun) edge [->] (verb);
+                 \path (verb) edge [dashed, <->] (actions);
+                 \path (pron) edge [dashed, <->] node[label] {queries} (pron -| base-onto);
+                 \path (noun.20) edge [dashed, <->] node[label] {queries} (noun.20 -| base-onto);
+                 \path (discr) edge [<->] (discr -| base-onto);
+ 
+                 \node [left=0.2 of resolution.west, rotate=90, anchor=south] {Resolution};
+                 \path (parsing) edge [->] (pron);
+ 
+             %%% INTERPRETATION
+                     \node [skill, below=0.4 of resolution,minimum width=5cm, minimum height=3cm] (interp) {};
+                 \node [subpart, below=0.2 of interp.north] (content) {Content analysis};
+                 \node [below=0.6 of content.south west, subpart] (question) {Question \\ handler};
+                 \node [below=0.6 of content.south east, subpart] (stat) {Statement \\ builder};
+                 \path (content) edge [->] node[label, left] {question} (question);
+                 \path (content) edge [->] node [label, right] {goal | statement} (stat);
+                 \path (stat) edge [->] node [label] {asserts} (stat -| base-onto);
+ 
+                 \node [left=0.2 of interp.west, rotate=90, anchor=south] {Interpretation};
+ 
+                 \path (verb) edge [->] (content);
+                 \path (question) edge [dashed, bend right, <->] node[label] {queries} (question.south -| base-onto);
+ 
+             %%% ONTOLOGY
+                     \node at (resolution.north -| base-onto) [rotate=-90, skill, minimum height=2cm, minimum width=7cm, fill=hriSec3!50, anchor=south west] (onto) {Ontology server};
+ 
+ 
+             %%% VERBALIZATION
+                 \node [below=0.7 of interp, skill, fill=hriSec2Dark!50] (verb) {Verbalization};
+             \path (question) edge [->] (verb);
+             \path (stat) edge [->] (verb);
+             \path (discr.south east) edge [black!50, dashed, bend left, <->] (verb.north east);
+             \node [right=0.7 of verb] (output) {\textbf{Output}};
+             \path (verb) edge [->] (output);
+         \end{tikzpicture}
+         }
+
+        \end{column}
+    \end{columns}
+
+\end{frame}
+
+\begin{frame}[fragile]{Finally, add a controller}
+\begin{pythoncode}
+
+
+import kb # pip install pykb
+kb = kb.KB()
+
+kb.subscribe(["HUMAN desires ?action"], onDesire)
+
+def onDesire(desire):
+        print("The human wants something!")
+        action = kb[desire + " rdf:type ?type"]
+        object = kb[desire + " actsOnObject ?object"]
+
+        if action == "Give":
+            robot.give(object) # <-- up to you!!
+
+        if action == "Get":
+            place = kb[object + " isAt ?place"] # isOn, isIn...
+            robot.goto(place) # <-- up to you!
+            robot.pick(object) # <-- up to you!
+
+\end{pythoncode}
+\end{frame}
+
+\videoframe[0.56]{figs/this_box.webm}
+%\videoframe[0.56]{figs/this_box.webm?autostart&start=1}
+
+
+%\begin{frame}[fragile]
+%\begin{pythoncode}
+%    from robots import GenericRobot
+%    from robots.concurrency import action, ActionCancelled
+%    from robots.resources import Resource, lock
+%
+%    class MyRobot(GenericRobot):
+%        # ... state + lowlevel action
+%
+%    WHEELS = Resource("wheels")
+%
+%    @lock(WHEELS)
+%    @action
+%    def move_forward(robot):
+%        target = [1.0, 0., 0., "base_link"]
+%
+%        try:
+%            robot.goto(target)
+%
+%            while(robot.dist_to(target) > 0.1):
+%                robot.sleep(0.5)
+%
+%        except ActionCancelled:
+%            robot.stop()
+%
+%\end{pythoncode}
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\begin{frame}[fragile]
+%\begin{pythoncode}
+%    with MyRobot() as robot:
+%
+%        robot.whenever("my_bumper", True).do(move_forward)
+%
+%        try:
+%            while True:
+%                time.sleep(0.5)
+%        except KeyboardInterrupt:
+%            pass
+%\end{pythoncode}
+%\end{frame}
+
+
+\section{Those are false beliefs!}
+
+
+\begin{frame}[plain]
 
     \begin{center}
-        \includegraphics<1>[width=\linewidth]{cnn-features}
-        \includegraphics<2>[width=0.55\linewidth]{cnn-hi-level-features}
+        \includegraphics[width=0.8\linewidth]{figs/this_box_thumb}
+
+        What if I ask for the video tape in the box, but the robot previously
+        moved it somewhere else?
+
+
     \end{center}
+\end{frame}
+
+\imageframe[scale=0.9]{sally_ann}
+
+\begin{frame}{Just clone it!}
+        \begin{multicols}{2}
+            \begin{figure}
+                \resizebox{0.4\textwidth}{!}{
+                    \begin{tikzpicture}[
+                        >=latex,
+                        every edge/.style={<-, draw, very thick},
+                        every node/.style={draw, font=\sf, node distance=0.5, rounded corners,
+                                        align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                        classof/.style={<-, draw=black!60, dashed},
+                        property/.style={<-, draw=hriSec2Comp},
+                        propname/.style={above, draw=none, fill=none, font=\tt, inner sep=2pt},
+                        instance/.style={draw=hriSec1Dark, font=\sf, node distance=0.5, rounded corners,
+                        align=center, inner sep=5pt, fill=white}]
+
+                    \node[fill=hriSec2Comp!50] (thing) {\textbf{thing}};
+                    \node [fill=hriSec3CompDark!50, node distance=1.8, below left=of thing](sthing) {place} edge[dashed] (thing);
+                    \node [fill=hriSec3CompDark!50, below left=of sthing] (agent) {agent} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below=of sthing] (artifact) {artifact} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of sthing] (location) {physical
+                        support} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of artifact] (table) {table}
+                            edge (location) edge (artifact);
+
+
+                    \node [node distance=1, below right=of thing] (tthing) {temporal thing} edge (thing);
+                        \node [below right=of tthing] (evt) {event} edge[dashed] (tthing);
+                                    \node [below right=of evt] (act) {action} edge (evt);
+
+                \draw[dotted, thick] (-7,-5) -- (7.5, -5);
+
+                \node [instance, below=3 of agent] (human) {human\_1} edge[classof, bend left] (agent);
+                \node [instance, above left=of human] (human2) {human\_2} edge[classof, bend left] (agent);
+                \node [instance, above right=of human, anchor=south] (robot) {pr2\_robot} edge[classof, bend left] (agent);
+;
+                \node [instance, right=of human, anchor=north west] (book) {book\_game\_thrones}
+                edge[classof] (artifact);
+                \node [instance, right=3 of robot] (ikea) {ikea\_table} edge[classof, bend
+                right] (table);
+                \node [instance, right=2 of book] (red) {red} edge[property] node[propname] {hasColor} (book);
+
+                \node [instance,right=1 of robot,fill=hriSec2] {myself} edge[property] node[propname, auto,above] {$\equiv$} (robot);
+
+                \draw[dotted, thick] (-7,-8) -- (7.5, -8);
+
+                \path (book.200) edge [property, out=-100, in=-80, looseness=2]
+                node[propname,auto] {isNextTo} (human.south);
+                \path (book.270) edge [property, out=-100, in=-90, looseness=3.5] node[propname,auto] {looksAt} (robot.south);
+                \path (ikea.south) edge [property, out=-90, in=-80, looseness=3] node[propname, auto] {isOn} (book.320);
+                \end{tikzpicture}
+            }
+
+            \end{figure}
+            \begin{figure}
+                \resizebox{0.4\textwidth}{!}{
+                    \begin{tikzpicture}[
+                        >=latex,
+                        every edge/.style={<-, draw, very thick},
+                        every node/.style={draw, font=\sf, node distance=0.5, rounded corners,
+                                        align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                        classof/.style={<-, draw=black!60, dashed},
+                        property/.style={<-, draw=hriSec2Comp},
+                        propname/.style={above, draw=none, fill=none, font=\tt, inner sep=2pt},
+                        instance/.style={draw=hriSec1Dark, font=\sf, node distance=0.5, rounded corners,
+                        align=center, inner sep=5pt, fill=white}]
+
+                    \node[fill=hriSec2Comp!50] (thing) {\textbf{thing}};
+                    \node [fill=hriSec3CompDark!50, node distance=1.8, below left=of thing](sthing) {place} edge[dashed] (thing);
+                    \node [fill=hriSec3CompDark!50, below left=of sthing] (agent) {agent} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below=of sthing] (artifact) {artifact} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of sthing] (location) {physical
+                        support} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of artifact] (table) {table}
+                            edge (location) edge (artifact);
+
+
+                    \node [node distance=1, below right=of thing] (tthing) {temporal thing} edge (thing);
+                        \node [below right=of tthing] (evt) {event} edge[dashed] (tthing);
+                                    \node [below right=of evt] (act) {action} edge (evt);
+
+                \draw[dotted, thick] (-7,-5) -- (7.5, -5);
+
+                \node [instance, below=3 of agent] (human) {human\_1} edge[classof, bend left] (agent);
+                \node [instance, above left=of human] (human2) {human\_2} edge[classof, bend left] (agent);
+                \node [instance, above right=of human, anchor=south] (robot) {pr2\_robot} edge[classof, bend left] (agent);
+;
+                \node [instance, right=of human, anchor=north west] (book) {book\_game\_thrones}
+                edge[classof] (artifact);
+                \node [instance, right=3 of robot] (ikea) {ikea\_table} edge[classof, bend
+                right] (table);
+                \node [instance, right=2 of book] (red) {red} edge[property] node[propname] {hasColor} (book);
+
+                \node [instance,below left=1 of human,fill=hriSec2] {myself} edge[property] node[propname, auto,above] {$\equiv$} (human);
+
+                \draw[dotted, thick] (-7,-8) -- (7.5, -8);
+
+                \path (book.200) edge [property, out=-100, in=-80, looseness=2]
+                node[propname,auto] {isNextTo} (human.south);
+                \path (book.270) edge [property, out=-100, in=-90, looseness=3.5] node[propname,auto] {looksAt} (robot.south);
+                \path (ikea.south) edge [property, out=-90, in=-80, looseness=3] node[propname, auto] {isOn} (book.320);
+                \end{tikzpicture}
+            }
+            \end{figure}
+            \begin{figure}
+                \resizebox{0.4\textwidth}{!}{
+                    \begin{tikzpicture}[
+                        >=latex,
+                        every edge/.style={<-, draw, very thick},
+                        every node/.style={draw, font=\sf, node distance=0.5, rounded corners,
+                                        align=center, inner sep=5pt,fill=hriSec2Dark!50},
+                        classof/.style={<-, draw=black!60, dashed},
+                        property/.style={<-, draw=hriSec2Comp},
+                        propname/.style={above, draw=none, fill=none, font=\tt, inner sep=2pt},
+                        instance/.style={draw=hriSec1Dark, font=\sf, node distance=0.5, rounded corners,
+                        align=center, inner sep=5pt, fill=white}]
+
+                    \node[fill=hriSec2Comp!50] (thing) {\textbf{thing}};
+                    \node [fill=hriSec3CompDark!50, node distance=1.8, below left=of thing](sthing) {place} edge[dashed] (thing);
+                    \node [fill=hriSec3CompDark!50, below left=of sthing] (agent) {agent} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below=of sthing] (artifact) {artifact} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of sthing] (location) {physical
+                        support} edge (sthing);
+                        \node [fill=hriSec3CompDark!50, below right=of artifact] (table) {table}
+                            edge (location) edge (artifact);
+
+
+                    \node [node distance=1, below right=of thing] (tthing) {temporal thing} edge (thing);
+                        \node [below right=of tthing] (evt) {event} edge[dashed] (tthing);
+                                    \node [below right=of evt] (act) {action} edge (evt);
+
+                \draw[dotted, thick] (-7,-5) -- (7.5, -5);
+
+                \node [instance, below=3 of agent] (human) {human\_1} edge[classof, bend left] (agent);
+                \node [instance, above left=of human] (human2) {human\_2} edge[classof, bend left] (agent);
+                \node [instance, above right=of human, anchor=south] (robot) {pr2\_robot} edge[classof, bend left] (agent);
+;
+                \node [instance, right=of human, anchor=north west] (book) {book\_game\_thrones}
+                edge[classof] (artifact);
+                \node [instance, right=3 of robot] (ikea) {ikea\_table} edge[classof, bend
+                right] (table);
+                \node [instance, right=2 of book] (red) {red} edge[property] node[propname] {hasColor} (book);
+
+                \node [instance,below=1 of human2,fill=hriSec2] {myself} edge[property] node[propname, auto] {$\equiv$} (human2);
+
+                \draw[dotted, thick] (-7,-8) -- (7.5, -8);
+
+                \path (book.200) edge [property, out=-100, in=-80, looseness=2]
+                node[propname,auto] {isNextTo} (human.south);
+                \path (book.270) edge [property, out=-100, in=-90, looseness=3.5] node[propname,auto] {looksAt} (robot.south);
+                \path (ikea.south) edge [property, out=-90, in=-80, looseness=3] node[propname, auto] {isOn} (book.320);
+                \end{tikzpicture}
+            }
+            \end{figure}
+            {\vspace*{1.5cm}\hspace*{2.5cm}\huge...}
+        \end{multicols}
+\end{frame}
+
+\section{I will not be forced by a rogue and out of control robot to make up lies and
+stories}
+
+
+\imageframe{vectors}
+\videoframe[0.56]{figs/pinsoro-matplotlib.mp4}
+\imageframe[color=black]{tiago}
+\videoframe[0.56]{figs/underworlds.mp4?start=20}
+
+\begin{frame}[plain]
+
+
+    \Huge
+    \textbf{Very, very great?}
+
+    \large
+
+    \vspace{2em}
+    Bring in your ideas!\\
+
+    severin.lemaignan@brl.ac.uk \\
+    (or Manuel!)
+
+\end{frame}
+
+
+{
+    \fullbackground[color=black]{trump}
+
+\begin{frame}[plain]
+
+    \color{white}
+
+    \Huge
+    \textbf{I like this guy!}
+
+    \vfill
+
 \end{frame}
 }
 
+
 \end{document}
+
+
+
+
+
+
