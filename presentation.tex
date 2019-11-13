@@ -202,13 +202,12 @@
 
     \centering
     \vspace*{2em}
-    {\bf ``Give me the book on the table''}\\
+    {\bf ``Give me that book''}\\
 
     \uncover<2-> {
         $\downarrow$\\
         {\tt me} $\rightarrow$ {\tt human\_1} \\
-        find({\tt\scriptsize ?obj type table}) $\rightarrow$ {\tt ikea\_table} \\
-        find({\tt\scriptsize ?obj type book, ?obj isOn ikea\_table})
+        find({\tt\scriptsize ?obj type Book, human\_1 focusesOn ?obj})
         $\rightarrow$ {\tt book\_game\_thrones} \\
     }
 
@@ -218,7 +217,7 @@
             \textbf{human\_1} desires \textbf{give\_act\_1}, \\
             \textbf{give\_act\_1} type \textbf{Give}, \\
             \textbf{give\_act\_1} performedBy \textbf{myself}, \\
-            \textbf{give\_act\_1} actsOnObject \textbf{book}, \\
+            \textbf{give\_act\_1} actsOnObject \textbf{book\_GoT}, \\
             \textbf{give\_act\_1} receivedBy \textbf{human\_1} \\
         }
     }
@@ -323,7 +322,7 @@
 %\end{pythoncode}
 %\end{frame}
 
-\videoframe[0.56]{figs/this_box.webm}
+\videoframe[0.56]{figs/this_box.avi}
 %\videoframe[0.56]{figs/this_box.webm?autostart&start=1}
 
 
@@ -552,7 +551,7 @@
 \imageframe[color=black]{cozmo-expression-sheet}
 \videoframe[0.56]{figs/pinsoro-matplotlib.mp4}
 \imageframe[color=black]{tiago}
-\videoframe[0.56]{figs/underworlds.mp4?start=20}
+\videoframe[0.56]{figs/underworlds.avi?start=20}
 
 \begin{frame}[plain]
 
