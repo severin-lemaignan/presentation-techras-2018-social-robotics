@@ -25,8 +25,8 @@
 %--------------------------------------------------------------------------
 % General presentation settings
 %--------------------------------------------------------------------------
-\title{Social Robots are Fake News}
-\subtitle{...so let's make them great again}
+\title{Social Robots!}
+\subtitle{...what's the buzz about?}
 \date{\today}
 \author{Séverin Lemaignan}
 \institute{{\bf Bristol Robotics Lab}\\University of the West of England}
@@ -41,22 +41,23 @@
 % Titlepage
 %--------------------------------------------------------------------------
 
-\begin{frame}[plain]
-    \Large
-    \begin{center}
-        Last week, Manuel told you about social robots...
-    \end{center}
-\end{frame}
-
 \maketitle
+\imageframe{hri@brl}
 
 %\licenseframe{https://github.com/severin-lemaignan/practical-social-robots}
 
-\section{Social robots? DISHONEST!}
+\section[Social robots]{Is there such a thing?\\Social robots?}
 \imageframe[color=black]{cowriter/henry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{frame}[plain]
+%    \Large
+%    \begin{center}
+%        Last week, Manuel told you about social robots...
+%    \end{center}
+%\end{frame}
 
 \videoframe[0.56]{figs/cowriter/training-s.mp4}
 %\videoframe[0.56]{figs/cowriter/training-s.mp4?autostart&noaudio}
@@ -92,18 +93,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{I'd say very very easy if you have guts}
+\section{How hard is that?}
 
 \imageframe{pr2-baby-1}
 \imageframe{pr2-baby-2}
 \imageframe{pr2-baby-3}
 \imageframe{pr2-baby-4}
 
-\section{I don't understand! Very unfair!}
 
-
-
-\begin{frame}[plain]
+\begin{frame}{Taking the human perspective}
 
     \centering
 
@@ -183,7 +181,7 @@
 
         \node [instance, below=5 of act] (moving) {move\_act\_42} edge[classof] (act);
         \path (moving.west) edge [property, out=180, in=-80, looseness=1] node[propname,below] {currentlyPerforms} (human.230);
-        \path (human.280) edge [property, out=-80, in=-90, looseness=3.5] node[propname,right] {looksAt} (robot.south);
+        \path (book.250) edge [property, out=200, in=-80, looseness=1] node[propname,right]{looksAt} (human.280);
         \path (ikea.south) edge [property, out=-90, in=-80, looseness=2.5] node[propname, auto] {isOn} (book.320);
         }
         \end{tikzpicture}
@@ -300,30 +298,30 @@
 
 \end{frame}
 
-\begin{frame}[fragile]{Finally, add a controller}
-\begin{pythoncode}
-
-
-import kb # pip install pykb
-kb = kb.KB()
-
-kb.subscribe(["HUMAN desires ?action"], onDesire)
-
-def onDesire(desire):
-        print("The human wants something!")
-        action = kb[desire + " rdf:type ?type"]
-        object = kb[desire + " actsOnObject ?object"]
-
-        if action == "Give":
-            robot.give(object) # <-- up to you!!
-
-        if action == "Get":
-            place = kb[object + " isAt ?place"] # isOn, isIn...
-            robot.goto(place) # <-- up to you!
-            robot.pick(object) # <-- up to you!
-
-\end{pythoncode}
-\end{frame}
+%\begin{frame}[fragile]{Finally, add a controller}
+%\begin{pythoncode}
+%
+%
+%import kb # pip install pykb
+%kb = kb.KB()
+%
+%kb.subscribe(["HUMAN desires ?action"], onDesire)
+%
+%def onDesire(desire):
+%        print("The human wants something!")
+%        action = kb[desire + " rdf:type ?type"]
+%        object = kb[desire + " actsOnObject ?object"]
+%
+%        if action == "Give":
+%            robot.give(object) # <-- up to you!!
+%
+%        if action == "Get":
+%            place = kb[object + " isAt ?place"] # isOn, isIn...
+%            robot.goto(place) # <-- up to you!
+%            robot.pick(object) # <-- up to you!
+%
+%\end{pythoncode}
+%\end{frame}
 
 \videoframe[0.56]{figs/this_box.webm}
 %\videoframe[0.56]{figs/this_box.webm?autostart&start=1}
@@ -374,7 +372,7 @@ def onDesire(desire):
 %\end{frame}
 
 
-\section{Those are false beliefs!}
+\section{A pinch of social psychology:\\false beliefs!}
 
 
 \begin{frame}[plain]
@@ -548,11 +546,10 @@ def onDesire(desire):
         \end{multicols}
 \end{frame}
 
-\section{I will not be forced by a rogue and out of control robot to make up lies and
-stories}
+\section{Project ideas}
 
 
-\imageframe{vectors}
+\imageframe[color=black]{cozmo-expression-sheet}
 \videoframe[0.56]{figs/pinsoro-matplotlib.mp4}
 \imageframe[color=black]{tiago}
 \videoframe[0.56]{figs/underworlds.mp4?start=20}
@@ -561,7 +558,7 @@ stories}
 
 
     \Huge
-    \textbf{Very, very great?}
+    \textbf{Sounds good?}
 
     \large
 
@@ -569,7 +566,7 @@ stories}
     Bring in your ideas!\\
 
     severin.lemaignan@brl.ac.uk \\
-    (or Manuel!)
+    (or Manuel, or Praminda!)
 
 \end{frame}
 
