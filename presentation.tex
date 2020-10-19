@@ -3,7 +3,7 @@
 %--------------------------------------------------------------------------
 % Common packages
 %--------------------------------------------------------------------------
-\usepackage[english]{babel}
+\usepackage[UKenglish]{babel}
 \usepackage{pgfpages} % required for notes on second screen
 \usepackage{graphicx}
 
@@ -44,9 +44,25 @@
 \maketitle
 \imageframe{hri@brl}
 
+{
+    \fullbackground[color=black]{trump}
+
+\begin{frame}[plain]
+
+    \color{white}
+
+    \Huge
+    \textbf{I'm gonna like this!}
+
+    \vfill
+
+\end{frame}
+}
+
+
 %\licenseframe{https://github.com/severin-lemaignan/practical-social-robots}
 
-\section[Social robots]{Is there such a thing?\\Social robots?}
+\section[Social robots]{Anyway...\\``Social'' robots? Really?}
 \imageframe[color=black]{cowriter/henry}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,8 +75,8 @@
 %    \end{center}
 %\end{frame}
 
-\videoframe[0.56]{figs/cowriter/training-s.mp4}
-%\videoframe[0.56]{figs/cowriter/training-s.mp4?autostart&noaudio}
+%\videoframe[0.56]{figs/cowriter/training-s.mp4}
+\videoframe[0.56]{figs/cowriter/training-s.mp4?autostart&noaudio}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -322,8 +338,8 @@
 %\end{pythoncode}
 %\end{frame}
 
-\videoframe[0.56]{figs/this_box.avi}
-%\videoframe[0.56]{figs/this_box.webm?autostart&start=1}
+%\videoframe[0.56]{figs/this_box.avi}
+\videoframe[0.56]{figs/this_box.mp4?autostart&start=1}
 
 
 %\begin{frame}[fragile]
@@ -547,11 +563,15 @@
 
 \section{Project ideas}
 
+\imageframe{ros4hri}
 
-\imageframe[color=black]{cozmo-expression-sheet}
-\videoframe[0.56]{figs/pinsoro-matplotlib.mp4}
-\imageframe[color=black]{tiago}
-\videoframe[0.56]{figs/underworlds.avi?start=20}
+\videoframe[0.56]{figs/underworlds.avi?start=20&autostart}
+
+%\imageframe[color=black]{cozmo-expression-sheet}
+\imageframe[color=black]{expressive-eyes-chambers}
+\videoframe[0.56]{figs/pinsoro-matplotlib.mp4?autostart}
+%\imageframe[color=black]{tiago}
+\imageframe[color=black]{robots4sen}
 
 \begin{frame}[plain]
 
@@ -569,21 +589,6 @@
 
 \end{frame}
 
-
-{
-    \fullbackground[color=black]{trump}
-
-\begin{frame}[plain]
-
-    \color{white}
-
-    \Huge
-    \textbf{I like this guy!}
-
-    \vfill
-
-\end{frame}
-}
 
 
 \end{document}
